@@ -1,0 +1,35 @@
+# ===============================
+# S32DS / Eclipse
+# ===============================
+.metadata/
+.settings/
+
+# Build folders
+Debug/
+Release/
+*/Debug/
+*/Release/
+
+# Build outputs
+*.elf
+*.map
+*.hex
+*.bin
+*.siz
+*.d
+*.o
+
+# CDT / GCC temp
+*.args
+*.lst
+
+# Backup folders S32DS
+*.bak/
+**/*.bak/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/

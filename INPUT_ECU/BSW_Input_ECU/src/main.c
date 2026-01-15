@@ -11,7 +11,6 @@
 */
 /* MODULE main */
 
-
 /* Including necessary configuration files. */
 #include "sdk_project_config.h"
 
@@ -28,9 +27,9 @@ int main(void)
 {
     /* Write your code here */
 
-    for(;;)
+    for (;;)
     {
-        if(exit_code != 0)
+        if (exit_code != 0)
         {
             break;
         }
