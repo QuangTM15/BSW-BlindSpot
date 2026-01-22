@@ -4,6 +4,7 @@ VehicleState_t gVehicleState =
 {
     .seq = 0,
     .lastUpdate_ms = 0,
+    
     .validFlags = VS_VALID_NONE,
 
     .motorRun = MOTOR_STOP,
@@ -11,6 +12,4 @@ VehicleState_t gVehicleState =
     .speed_kmh = 0,
     .obstacleFlags = OBS_NONE,
     .turnSignal = TURN_NONE
-};
-
-
+};   

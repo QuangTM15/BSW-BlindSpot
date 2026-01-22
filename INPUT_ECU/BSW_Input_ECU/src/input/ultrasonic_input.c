@@ -8,7 +8,7 @@
  *  - Update obstacle information into VehicleState
  ******************************************************************************/
 
-#include "vehicle_state.h"
+#include "state/vehicle_state.h"
 
 /**
  * @brief Initialize ultrasonic sensor hardware

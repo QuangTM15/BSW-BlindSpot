@@ -7,7 +7,7 @@
  *  - Update speed information into VehicleState
  ******************************************************************************/
 
-#include "vehicle_state.h"
+#include "state/vehicle_state.h"
 
 /**
  * @brief Initialize speed measurement hardware

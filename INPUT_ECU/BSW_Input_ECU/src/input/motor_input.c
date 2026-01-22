@@ -10,7 +10,7 @@
  * It MUST NOT perform any system or BSW decision logic.
  ******************************************************************************/
 
-#include "vehicle_state.h"
+#include "state/vehicle_state.h"
 
 /**
  * @brief Initialize motor input hardware

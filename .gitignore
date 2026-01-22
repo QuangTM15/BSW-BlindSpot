@@ -1,35 +1,29 @@
 # ===============================
-# S32DS / Eclipse
+# Workspace (KHÔNG BAO GIỜ COMMIT)
 # ===============================
 .metadata/
-.settings/
 
-# Build folders
+# ===============================
+# Build output
+# ===============================
 Debug/
 Release/
-*/Debug/
-*/Release/
+Debug_FLASH/
+Release_FLASH/
 
-# Build outputs
 *.elf
 *.map
 *.hex
 *.bin
 *.siz
-*.d
 *.o
-
-# CDT / GCC temp
-*.args
+*.d
 *.lst
+*.args
 
-# Backup folders S32DS
-*.bak/
-**/*.bak/
-
-# OS files
+# ===============================
+# OS / Editor
+# ===============================
+.vscode/
 .DS_Store
 Thumbs.db
-
-# VS Code
-.vscode/
