@@ -40,6 +40,13 @@ BOARD_InitPins:
   - {pin_num: '49', peripheral: PORTC, signal: 'port, 13', pin_signal: PTC13, direction: INPUT, IRQC: state_1010, PE: state_1, PS: state_1}
   - {pin_num: '22', peripheral: PORTD, signal: 'port, 15', pin_signal: PTD15, direction: OUTPUT}
   - {pin_num: '21', peripheral: PORTD, signal: 'port, 16', pin_signal: PTD16, direction: OUTPUT}
+  - {pin_num: '94', peripheral: PORTE, signal: 'port, 0', pin_signal: PTE0, direction: OUTPUT, initValue: no_init}
+  - {pin_num: '81', peripheral: LPUART1, signal: rxd, pin_signal: PTC6}
+  - {pin_num: '80', peripheral: LPUART1, signal: txd, pin_signal: PTC7}
+  - {pin_num: '34', peripheral: FTM2, signal: 'ch, 2', pin_signal: PTD12, direction: INPUT, PE: state_1}
+  - {pin_num: '25', peripheral: FTM2, signal: 'ch, 4', pin_signal: PTD13, direction: INPUT, PE: state_1}
+  - {pin_num: '35', peripheral: FTM2, signal: 'ch, 1', pin_signal: PTD11, direction: INPUT, PE: state_0}
+  - {pin_num: '24', peripheral: FTM2, signal: 'ch, 5', pin_signal: PTD14, direction: INPUT, PE: state_1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -77,6 +84,84 @@ pin_settings_config_t g_pin_mux_InitConfigArr0[NUM_OF_CONFIGURED_PINS0] = {
         .initValue       = 0U,
     },
     {
+        .base            = PORTC,
+        .pinPortIdx      = 6U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTC,
+        .pinPortIdx      = 7U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTD,
+        .pinPortIdx      = 11U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTD,
+        .pinPortIdx      = 12U,
+        .pullConfig      = PORT_INTERNAL_PULL_DOWN_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTD,
+        .pinPortIdx      = 13U,
+        .pullConfig      = PORT_INTERNAL_PULL_DOWN_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTD,
+        .pinPortIdx      = 14U,
+        .pullConfig      = PORT_INTERNAL_PULL_DOWN_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT2,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
         .base            = PORTD,
         .pinPortIdx      = 15U,
         .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
@@ -102,6 +187,21 @@ pin_settings_config_t g_pin_mux_InitConfigArr0[NUM_OF_CONFIGURED_PINS0] = {
         .intConfig       = PORT_DMA_INT_DISABLED,
         .clearIntFlag    = false,
         .gpioBase        = PTD,
+        .direction       = GPIO_OUTPUT_DIRECTION,
+        .digitalFilter   = false,
+        .initValue       = 0U,
+    },
+    {
+        .base            = PORTE,
+        .pinPortIdx      = 0U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_AS_GPIO,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = PTE,
         .direction       = GPIO_OUTPUT_DIRECTION,
         .digitalFilter   = false,
         .initValue       = 0U,

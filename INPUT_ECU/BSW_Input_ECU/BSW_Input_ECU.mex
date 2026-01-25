@@ -61,6 +61,38 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="PORTE" signal="port, 0" pin_num="94" pin_signal="PTE0">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="initValue" value="no_init"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LPUART1" signal="rxd" pin_num="81" pin_signal="PTC6"/>
+                  <pin peripheral="LPUART1" signal="txd" pin_num="80" pin_signal="PTC7"/>
+                  <pin peripheral="FTM2" signal="ch, 2" pin_num="34" pin_signal="PTD12">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_1"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="FTM2" signal="ch, 4" pin_num="25" pin_signal="PTD13">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_1"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="FTM2" signal="ch, 1" pin_num="35" pin_signal="PTD11">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_0"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="FTM2" signal="ch, 5" pin_num="24" pin_signal="PTD14">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_1"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -241,7 +273,45 @@
          </efuse_profile>
       </efuse>
       <periphs name="Peripherals" version="11.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.lpuart" description="LPUART Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.lpuart" description="Unsupported version of the LPUART Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.lpit" description="LPIT Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.lpit" description="Unsupported version of the LPIT Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.ftm_ic" description="FTM_IC Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.ftm_ic" description="Unsupported version of the FTM_IC Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+         </dependencies>
          <generated_project_files>
+            <file path="board/peripherals_flexTimer_ic_1.c" update_enabled="true"/>
+            <file path="board/peripherals_flexTimer_ic_1.h" update_enabled="true"/>
+            <file path="board/peripherals_lpit_config_1.c" update_enabled="true"/>
+            <file path="board/peripherals_lpit_config_1.h" update_enabled="true"/>
+            <file path="board/peripherals_lpuart_1.c" update_enabled="true"/>
+            <file path="board/peripherals_lpuart_1.h" update_enabled="true"/>
             <file path="board/sdk_project_config.h" update_enabled="true"/>
          </generated_project_files>
          <peripherals_profile>
@@ -252,7 +322,94 @@
                <description></description>
                <options/>
                <dependencies/>
-               <instances/>
+               <instances>
+                  <instance name="lpuart_1" uuid="89385bcd-3d8c-4be6-99d9-c526a3b045e7" type="lpuart_config" type_id="lpuart" mode="general" peripheral="LPUART_1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="lpuart_driver" quick_selection="dv_lpuart1">
+                        <setting name="lpuart_state_name" value="lpUartState1"/>
+                        <array name="lpuart_configuration">
+                           <struct name="0">
+                              <setting name="name" value="lpuart_1_InitConfig0"/>
+                              <setting name="readonly" value="true"/>
+                              <setting name="transferType" value="LPUART_USING_INTERRUPTS"/>
+                              <setting name="baudRate" value="9600"/>
+                              <setting name="parityMode" value="LPUART_PARITY_DISABLED"/>
+                              <setting name="stopBitCount" value="LPUART_ONE_STOP_BIT"/>
+                              <setting name="bitCountPerChar" value="LPUART_8_BITS_PER_CHAR"/>
+                              <setting name="rxDMAChannel" value="0"/>
+                              <setting name="txDMAChannel" value="0"/>
+                           </struct>
+                        </array>
+                     </config_set>
+                  </instance>
+                  <instance name="lpit_config_1" uuid="f5ca5e09-d1ea-44df-8c6f-236a5aca4f69" type="lpit_config" type_id="lpit" mode="general" peripheral="LPIT_0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="lpit">
+                        <struct name="lpitConfig">
+                           <setting name="name" value="lpit1_InitConfig"/>
+                           <setting name="enableRunInDebug" value="false"/>
+                           <setting name="enableRunInDoze" value="false"/>
+                        </struct>
+                        <array name="lpitChannelConfig">
+                           <struct name="0">
+                              <setting name="name" value="lpit1_ChnConfig0"/>
+                              <setting name="cfgReadOnly" value="false"/>
+                              <setting name="timerMode" value="LPIT_PERIODIC_COUNTER"/>
+                              <setting name="periodUnits" value="LPIT_PERIOD_UNITS_MICROSECONDS"/>
+                              <setting name="period" value="30000"/>
+                              <setting name="triggerSource" value="LPIT_TRIGGER_SOURCE_INTERNAL"/>
+                              <setting name="triggerSelect" value="0U"/>
+                              <setting name="enableReloadOnTrigger" value="false"/>
+                              <setting name="enableStopOnInterrupt" value="false"/>
+                              <setting name="enableStartOnTrigger" value="false"/>
+                              <setting name="chainChannel" value="false"/>
+                              <setting name="isInterruptEnabled" value="true"/>
+                           </struct>
+                        </array>
+                     </config_set>
+                  </instance>
+                  <instance name="flexTimer_ic_1" uuid="2286b174-eff9-42fa-8617-4843801332df" type="flexTimer_ic" type_id="ftm_ic" mode="general" peripheral="FTM_2" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="ftm_ic">
+                        <struct name="totalConfiguration">
+                           <struct name="ftmUserConfig">
+                              <setting name="ClockSource" value="FTM_CLOCK_SOURCE_SYSTEMCLK"/>
+                              <setting name="ClockSourcePrescaler" value="8"/>
+                              <setting name="DebugMode" value="FTM_BDM_MODE_11"/>
+                              <setting name="TimerOverInterrupt" value="false"/>
+                              <setting name="InitializationTrigger" value="false"/>
+                           </struct>
+                           <struct name="icConfiguration">
+                              <setting name="numofChannel" value="2"/>
+                              <setting name="maxCountVal" value="65535"/>
+                              <array name="arrayicConfig">
+                                 <struct name="0">
+                                    <setting name="configName" value="flexTimer_ic_1_ChannelConfig0"/>
+                                    <setting name="hwID" value="2"/>
+                                    <setting name="operationMode" value="FTM_SIGNAL_MEASUREMENT"/>
+                                    <setting name="edgeDetectMode" value="FTM_RISING_EDGE"/>
+                                    <setting name="measureMode" value="FTM_PERIOD_ON_MEASUREMENT"/>
+                                    <setting name="continousMode" value="false"/>
+                                    <setting name="inputCaptureFilter" value="false"/>
+                                    <setting name="inputCaptureFilterValue" value="0"/>
+                                    <setting name="callback" value="NULL"/>
+                                    <setting name="callbackParameter" value="NULL"/>
+                                 </struct>
+                                 <struct name="1">
+                                    <setting name="configName" value="flexTimer_ic_1_ChannelConfig1"/>
+                                    <setting name="hwID" value="4"/>
+                                    <setting name="operationMode" value="FTM_SIGNAL_MEASUREMENT"/>
+                                    <setting name="edgeDetectMode" value="FTM_RISING_EDGE"/>
+                                    <setting name="measureMode" value="FTM_PERIOD_ON_MEASUREMENT"/>
+                                    <setting name="continousMode" value="false"/>
+                                    <setting name="inputCaptureFilter" value="false"/>
+                                    <setting name="inputCaptureFilterValue" value="0"/>
+                                    <setting name="callback" value="NULL"/>
+                                    <setting name="callbackParameter" value="NULL"/>
+                                 </struct>
+                              </array>
+                           </struct>
+                        </struct>
+                     </config_set>
+                  </instance>
+               </instances>
             </functional_group>
          </functional_groups>
          <components/>

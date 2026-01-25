@@ -1,62 +1,39 @@
-/******************************************************************************
- * @file ultrasonic_input.c
- * @brief Ultrasonic sensor input module
- *
- * Functionality:
- *  - Measure distance using ultrasonic sensors
- *  - Determine obstacle presence around the vehicle
- *  - Update obstacle information into VehicleState
- ******************************************************************************/
-
+#include "input/ultrasonic_input.h"
+#include "utils/ultrasonic_hw.h"
 #include "state/vehicle_state.h"
+#include <stddef.h>
+#include <stdbool.h>
 
-/**
- * @brief Initialize ultrasonic sensor hardware
- *
- * Function:
- *  - Prepare hardware resources required for ultrasonic measurement
- *
- * What this function MUST do:
- *  - Configure trigger and echo GPIO pins
- *  - Configure timers for echo pulse width measurement
- *
- * What this function MUST NOT do:
- *  - Trigger ultrasonic measurement
- *  - Modify VehicleState
- *
- * VehicleState impact:
- *  - NONE
- */
+#define OBSTACLE_THRESHOLD_CM 20U
+
 void UltrasonicInput_Init(void)
 {
-    /* To be implemented */
+    UltrasonicHW_Init();
 }
 
-/**
- * @brief Update obstacle information
- *
- * Function:
- *  - Perform ultrasonic measurements
- *  - Determine obstacle presence based on distance thresholds
- *
- * What this function MUST do:
- *  - Trigger ultrasonic sensors
- *  - Measure echo pulse duration
- *  - Convert pulse duration to distance
- *  - Check distance against predefined threshold
- *  - Determine obstacle presence for each direction
- *  - Update VehicleState
- *
- * VehicleState fields updated:
- *  - state->obstacleFlags
- *  - state->validFlags |= VS_VALID_ULTRASONIC
- *
- * What this function MUST NOT do:
- *  - Reconfigure hardware
- *  - Perform warning or BSW logic
- */
 void UltrasonicInput_Update(VehicleState_t *state)
 {
-    (void)state;
-    /* To be implemented */
+    if (state == NULL)
+        return;
+
+    /* Clear ultrasonic flags */
+    state->obstacleFlags &= ~(OBS_LEFT | OBS_RIGHT);
+
+    uint16_t dist;
+
+    /* LEFT */
+    dist = UltrasonicHW_GetDistanceCm(OBS_LEFT);
+    if (dist < OBSTACLE_THRESHOLD_CM)
+    {
+        state->obstacleFlags |= OBS_LEFT;
+    }
+
+    /* RIGHT */
+    dist = UltrasonicHW_GetDistanceCm(OBS_RIGHT);
+    if (dist < OBSTACLE_THRESHOLD_CM)
+    {
+        state->obstacleFlags |= OBS_RIGHT;
+    }
+
+    state->validFlags |= VS_VALID_ULTRASONIC;
 }

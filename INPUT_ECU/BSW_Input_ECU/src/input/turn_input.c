@@ -2,6 +2,7 @@
 #include "state/vehicle_state.h"
 #include <stddef.h>
 #include <stdbool.h>
+#include "utils/pinConfig.h"
 
 static volatile bool leftButtonEvent  = false;
 static volatile bool rightButtonEvent = false;
@@ -9,15 +10,15 @@ static TurnSignal_t currentTurn = TURN_NONE;
 
 void PORTC_IRQHandler(void)
 {
-    if (PORTC->ISFR & (1UL << 13))
+    if (PORTC->ISFR & (1UL << BTN_LEFT_PIN))
     {
-        PORTC->ISFR = (1UL << 13);
+        PORTC->ISFR = (1UL << BTN_LEFT_PIN);
         leftButtonEvent = true;
     }
 
-    if (PORTC->ISFR & (1UL << 12))
+    if (PORTC->ISFR & (1UL << BTN_RIGHT_PIN))
     {
-        PORTC->ISFR = (1UL << 12);
+        PORTC->ISFR = (1UL << BTN_RIGHT_PIN);
         rightButtonEvent = true;
     }
 }
