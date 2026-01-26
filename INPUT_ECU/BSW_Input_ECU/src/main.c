@@ -4,8 +4,12 @@
 #include "state/vehicle_state.h"
 
 /* ===== INPUT ===== */
+#include "manager/input_manager.h"
 #include "input/turn_input.h"
-#include "input/ultrasonic_input.h"
+
+/* ===== OUTPUT ===== */
+#include "output/output_hw.h"
+#include "output/output_logic.h"
 
 /* ===== UART ===== */
 #include "peripherals_lpuart_1.h"
@@ -13,8 +17,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
-#include "utils/ultrasonic_hw.h"   // DEBUG ONLY
 
 /* =========================================================
  * UART DEBUG
@@ -68,9 +70,6 @@ int main(void)
         &lpuart_1_InitConfig0
     );
 
-    UART_SendString("\r\n====================================\r\n");
-    UART_SendString("  BSW INPUT ECU - ULTRASONIC TEST    \r\n");
-    UART_SendString("====================================\r\n");
 
     /* ================= GLOBAL STATE INIT ================= */
     gVehicleState.validFlags    = VS_VALID_NONE;
@@ -79,41 +78,19 @@ int main(void)
 
     /* ================= INTERRUPTS ================= */
     INT_SYS_EnableIRQ(PORTC_IRQn);   /* Turn buttons */
-    /* PORTD IRQ NOT needed for ultrasonic (FTM IC) */
 
-    /* ================= INPUT INIT ================= */
-    TurnInput_Init();
-    UltrasonicInput_Init();
+    /* ================= MODULE INIT ================= */
+    InputManager_Init();     /* Ultrasonic + Turn input */
+    OutputHW_Init();         /* Set all output OFF */
 
-    UART_SendString("Init done. Measuring LEFT & RIGHT...\r\n\r\n");
 
     /* ================= MAIN LOOP ================= */
     while (1)
     {
-        /* Update ultrasonic input → cập nhật state */
-        UltrasonicInput_Update(&gVehicleState);
+        /* 1. Read all inputs -> update state */
+        InputManager_Update(&gVehicleState);
 
-        /* ===== DEBUG FLAGS ===== */
-        if (gVehicleState.obstacleFlags & OBS_LEFT)
-        {
-            UART_SendString("[FLAG] LEFT  : OBSTACLE\r\n");
-        }
-        else
-        {
-            UART_SendString("[FLAG] LEFT  : CLEAR\r\n");
-        }
-
-        if (gVehicleState.obstacleFlags & OBS_RIGHT)
-        {
-            UART_SendString("[FLAG] RIGHT : OBSTACLE\r\n");
-        }
-        else
-        {
-            UART_SendString("[FLAG] RIGHT : CLEAR\r\n");
-        }
-
-        UART_SendString("------------------------------------\r\n");
-
-        DelayMs(300);
+        /* 2. Handle all outputs based on state */
+        OutputLogic_Update(&gVehicleState);
     }
 }

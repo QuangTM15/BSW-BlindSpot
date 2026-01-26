@@ -47,7 +47,7 @@ instance:
         - TimerOverInterrupt: 'false'
         - InitializationTrigger: 'false'
       - icConfiguration:
-        - numofChannel: '3'
+        - numofChannel: '2'
         - maxCountVal: '65535'
         - arrayicConfig:
           - 0:

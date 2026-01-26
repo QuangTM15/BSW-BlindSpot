@@ -1,13 +1,9 @@
-/*
- * input_manager.h
- *
- *  Created on: Jan 15, 2026
- *      Author: -Asus
- */
+#ifndef INPUT_MANAGER_H
+#define INPUT_MANAGER_H
 
-#ifndef MANAGER_INPUT_MANAGER_H_
-#define MANAGER_INPUT_MANAGER_H_
+#include "state/vehicle_state.h"
 
+void InputManager_Init(void);
+void InputManager_Update(VehicleState_t *state);
 
-
-#endif /* MANAGER_INPUT_MANAGER_H_ */
+#endif
