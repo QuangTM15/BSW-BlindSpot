@@ -4,16 +4,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/* ================= ENUM================= */
+/* ================= ENUM ================= */
 
-//MOTOR STATE
+/* MOTOR STATE */
 typedef enum
 {
     MOTOR_STOP = 0,
     MOTOR_RUN
 } MotorRunState_t;
 
-//HUONG CHUYEN DONG
+/* VEHICLE MOTION */
 typedef enum
 {
     MOTION_STOP = 0,
@@ -21,7 +21,7 @@ typedef enum
     MOTION_BACKWARD
 } VehicleMotion_t;
 
-//VAT CAN
+/* OBSTACLE FLAG (BITMASK) */
 typedef enum
 {
     OBS_NONE  = 0x00,
@@ -31,7 +31,7 @@ typedef enum
     OBS_RIGHT = 0x08
 } ObstacleFlag_t;
 
-//XI NHAN
+/* TURN SIGNAL */
 typedef enum
 {
     TURN_NONE  = 0,
@@ -39,41 +39,45 @@ typedef enum
     TURN_RIGHT = 2
 } TurnSignal_t;
 
-//VALID DATA
+/* VALID FLAG */
 typedef enum
 {
-    VS_VALID_NONE       = 0x00, //NONE VALID
+    VS_VALID_NONE       = 0x00,
     VS_VALID_MOTOR      = 0x01,
-    VS_VALID_SPEED      = 0x02, //DATA IS VALID
+    VS_VALID_SPEED      = 0x02,
     VS_VALID_ULTRASONIC = 0x04,
     VS_VALID_TURN       = 0x08
 } VehicleStateValidFlag_t;
 
-/* ================= MAIN STATE ================= */
+/* ================= MAIN VEHICLE STATE ================= */
 
 typedef struct
 {
-	//SEND/RECIVE SIGNAL
-    uint32_t seq; //number
-    uint32_t lastUpdate_ms; //time
-    uint8_t validFlags; //valid
+    /* ---------- META ---------- */
+    uint32_t seq;               // update counter
+    uint32_t lastUpdate_ms;     // timestamp
+    uint8_t  validFlags;        // VehicleStateValidFlag_t
 
-    /* ----------MOTOR---------- */
-    MotorRunState_t motorRun; //isRun
+    /* ---------- MOTOR / MOTION ---------- */
+    MotorRunState_t motorRun;
     VehicleMotion_t motion;
 
     /* ---------- SPEED ---------- */
     uint16_t speed_kmh;
 
-    /* ---------- VAT CAN ---------- */
-    uint8_t obstacleFlags;
+    /* ---------- ULTRASONIC FLAGS ---------- */
+    uint8_t obstacleFlags;      // ObstacleFlag_t (bitmask)
 
-    /* ---------- XI NHAN ---------- */
+    /* ---------- ULTRASONIC DISTANCE (cm) ---------- */
+    int16_t us_front_cm;        // front distance
+    int16_t us_rear_cm;         // rear distance (USED FOR REVERSE)
+
+    /* ---------- TURN SIGNAL ---------- */
     TurnSignal_t turnSignal;
 
 } VehicleState_t;
 
-//GLOBAL STATE
+/* GLOBAL VEHICLE STATE */
 extern VehicleState_t gVehicleState;
 
 #endif /* VEHICLE_STATE_H */

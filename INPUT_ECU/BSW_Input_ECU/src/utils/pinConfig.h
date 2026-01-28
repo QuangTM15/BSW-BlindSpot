@@ -7,9 +7,12 @@
  * - Separate ECHO (INPUT)
  * ================================================= */
 
-/* Shared TRIG */
+/* Shared TRIG (LEFT / RIGHT) */
 #define US_TRIG_PORT PTE // GPIO 0 OUTPUT
 #define US_TRIG_PIN 0U
+/* FB TRIG */
+#define US_FB_TRIG_PORT PTD
+#define US_FB_TRIG_PIN 10U  // GPIO 6
 
 /* ECHO signals */
 #define US_FRONT_ECHO_PORT PTD
