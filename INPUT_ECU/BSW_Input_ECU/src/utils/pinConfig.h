@@ -12,14 +12,14 @@
 #define US_TRIG_PIN 0U
 /* FB TRIG */
 #define US_FB_TRIG_PORT PTD
-#define US_FB_TRIG_PIN 10U  // GPIO 6
+#define US_FB_TRIG_PIN 10U // GPIO 6 //OUTPUT
 
 /* ECHO signals */
 #define US_FRONT_ECHO_PORT PTD
-#define US_FRONT_ECHO_PIN 11U // GPIO 5 Input FTM2 ch1
+#define US_FRONT_ECHO_PIN 11U // GPIO 5 Input
 
 #define US_REAR_ECHO_PORT PTD
-#define US_REAR_ECHO_PIN 14U // GPIO 2 Input FTM2 Ch5
+#define US_REAR_ECHO_PIN 14U // GPIO 2 Input
 
 #define US_LEFT_ECHO_PORT PTD
 #define US_LEFT_ECHO_PIN 13U // GPIO 3 Input FTM2 Ch4

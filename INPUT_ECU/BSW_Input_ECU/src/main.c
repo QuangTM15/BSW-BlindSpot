@@ -70,27 +70,75 @@ int main(void)
         &lpuart_1_InitConfig0
     );
 
+    UART_SendString("\r\n=== ULTRASONIC DEBUG: DIST + FLAG ===\r\n");
 
-    /* ================= GLOBAL STATE INIT ================= */
-    gVehicleState.validFlags    = VS_VALID_NONE;
+    /* ================= STATE INIT ================= */
     gVehicleState.obstacleFlags = OBS_NONE;
-    gVehicleState.turnSignal    = TURN_NONE;
+    gVehicleState.validFlags    = VS_VALID_NONE;
+    gVehicleState.us_front_cm   = -1;
+    gVehicleState.us_rear_cm    = -1;
 
-    /* ================= INTERRUPTS ================= */
-    INT_SYS_EnableIRQ(PORTC_IRQn);   /* Turn buttons */
-
-    /* ================= MODULE INIT ================= */
-    InputManager_Init();     /* Ultrasonic + Turn input */
-    OutputHW_Init();         /* Set all output OFF */
-
+    /* ================= ULTRASONIC INIT ================= */
+    UltrasonicInput_Init();
 
     /* ================= MAIN LOOP ================= */
     while (1)
     {
-        /* 1. Read all inputs -> update state */
-        InputManager_Update(&gVehicleState);
+        /* -------- READ ULTRASONIC -------- */
+        UltrasonicInput_Update(&gVehicleState);
 
-        /* 2. Handle all outputs based on state */
-        OutputLogic_Update(&gVehicleState);
+        /* -------- PRINT DISTANCE -------- */
+        if (gVehicleState.us_front_cm > 0 &&
+            gVehicleState.us_rear_cm > 0)
+        {
+            sprintf(
+                uartBuf,
+                "FRONT: %ld cm | REAR: %ld cm\r\n",
+                gVehicleState.us_front_cm,
+                gVehicleState.us_rear_cm
+            );
+        }
+        else if (gVehicleState.us_front_cm > 0)
+        {
+            sprintf(
+                uartBuf,
+                "FRONT: %ld cm | REAR: No echo\r\n",
+                gVehicleState.us_front_cm
+            );
+        }
+        else if (gVehicleState.us_rear_cm > 0)
+        {
+            sprintf(
+                uartBuf,
+                "FRONT: No echo | REAR: %ld cm\r\n",
+                gVehicleState.us_rear_cm
+            );
+        }
+        else
+        {
+            sprintf(
+                uartBuf,
+                "FRONT: No echo | REAR: No echo\r\n"
+            );
+        }
+
+        UART_SendString(uartBuf);
+
+        /* -------- TEST FLAGS -> LED (ACTIVE LOW) -------- */
+
+        /* REAR obstacle -> PTD15 */
+        if (gVehicleState.obstacleFlags & OBS_REAR)
+            PINS_DRV_ClearPins(PTD, (1UL << 15)); // LED ON
+        else
+            PINS_DRV_SetPins(PTD, (1UL << 15));   // LED OFF
+
+        /* FRONT obstacle -> PTD16 */
+        if (gVehicleState.obstacleFlags & OBS_FRONT)
+            PINS_DRV_ClearPins(PTD, (1UL << 16)); // LED ON
+        else
+            PINS_DRV_SetPins(PTD, (1UL << 16));   // LED OFF
+
+        /* HC-SR04 safe interval */
+        DelayMs(120);
     }
 }

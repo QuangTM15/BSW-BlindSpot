@@ -47,8 +47,67 @@ void UltrasonicHW_Init(void)
     );
 }
 
+static void UltrasonicHW_DelayUs(uint32_t us)
+{
+    volatile uint32_t i;
+    while (us--)
+        for (i = 0; i < 8; i++) __asm("nop");
+}
+
+static inline void UltrasonicHW_TriggerFB(void)
+{
+    PINS_DRV_SetPins(US_FB_TRIG_PORT, (1UL << US_FB_TRIG_PIN));
+    UltrasonicHW_DelayUs(10);
+    PINS_DRV_ClearPins(US_FB_TRIG_PORT, (1UL << US_FB_TRIG_PIN));
+}
+
+static uint16_t UltrasonicHW_MeasureEchoCm(GPIO_Type *gpio, uint32_t pin)
+{
+    uint32_t time_us = 0;
+    uint32_t timeout = 30000;
+
+    /* wait echo HIGH */
+    while (!(PINS_DRV_ReadPins(gpio) & (1UL << pin)))
+    {
+        if (--timeout == 0)
+            return US_INVALID_DISTANCE;
+        UltrasonicHW_DelayUs(1);
+    }
+
+    timeout = 30000;
+    /* measure HIGH width */
+    while (PINS_DRV_ReadPins(gpio) & (1UL << pin))
+    {
+        UltrasonicHW_DelayUs(1);
+        time_us++;
+        if (--timeout == 0)
+            break;
+    }
+
+    return (uint16_t)((time_us * 3U) / 58U);
+}
+
 uint16_t UltrasonicHW_GetDistanceCm(ObstacleFlag_t direction)
 {
+    /* ===== FRONT / REAR : GPIO polling ===== */
+    if (direction == OBS_FRONT)
+    {
+        UltrasonicHW_TriggerFB();
+        return UltrasonicHW_MeasureEchoCm(
+            US_FRONT_ECHO_PORT,
+            US_FRONT_ECHO_PIN
+        );
+    }
+
+    if (direction == OBS_REAR)
+    {
+        UltrasonicHW_TriggerFB();
+        return UltrasonicHW_MeasureEchoCm(
+            US_REAR_ECHO_PORT,
+            US_REAR_ECHO_PIN
+        );
+    }
+
     uint8_t channel = UltrasonicHW_GetChannel(direction);
     if (channel == 0xFF)
         return US_INVALID_DISTANCE;
