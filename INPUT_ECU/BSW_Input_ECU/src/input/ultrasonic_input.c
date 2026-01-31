@@ -1,5 +1,5 @@
+#include <hardware/ultrasonic_hw.h>
 #include "input/ultrasonic_input.h"
-#include "utils/ultrasonic_hw.h"
 #include "state/vehicle_state.h"
 #include <stddef.h>
 #include <stdbool.h>

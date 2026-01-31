@@ -96,6 +96,21 @@
                         <pin_feature name="direction" value="INPUT"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="PORTD" signal="port, 9" pin_num="41" pin_signal="PTD9">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="PORTD" signal="port, 8" pin_num="42" pin_signal="PTD8">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="PORTD" signal="port, 0" pin_num="4" pin_signal="PTD0">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -327,7 +342,7 @@
                <dependencies/>
                <instances>
                   <instance name="lpuart_1" uuid="89385bcd-3d8c-4be6-99d9-c526a3b045e7" type="lpuart_config" type_id="lpuart" mode="general" peripheral="LPUART_1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
-                     <config_set name="lpuart_driver" quick_selection="dv_lpuart1">
+                     <config_set name="lpuart_driver">
                         <setting name="lpuart_state_name" value="lpUartState1"/>
                         <array name="lpuart_configuration">
                            <struct name="0">

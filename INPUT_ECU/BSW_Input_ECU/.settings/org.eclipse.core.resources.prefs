@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/hardware/ultrasonic_hw.c=UTF-8
 encoding//src/input/ultrasonic_input.c=UTF-8
 encoding//src/main.c=UTF-8
 encoding//src/state/vehicle_state.h=UTF-8
-encoding//src/utils/ultrasonic_hw.c=UTF-8

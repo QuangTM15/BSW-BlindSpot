@@ -1,55 +1,36 @@
 #include "sdk_project_config.h"
 
-/* ===== STATE ===== */
-#include "state/vehicle_state.h"
-
 /* ===== INPUT ===== */
-#include "manager/input_manager.h"
-#include "input/turn_input.h"
+#include "input/motor_input.h"
+#include "input/input_cmd.h"
 
-/* ===== OUTPUT ===== */
-#include "output/output_hw.h"
-#include "output/output_logic.h"
+/* ===== HARDWARE ===== */
+#include "hardware/motor_hw.h"
 
 /* ===== UART ===== */
 #include "peripherals_lpuart_1.h"
 #include "lpuart_driver.h"
 
-#include <stdio.h>
 #include <string.h>
+#include "lpuart_hw_access.h"
+#include "state/vehicle_state.h"
 
 /* =========================================================
- * UART DEBUG
+ * UART BOOT MESSAGE
  * ========================================================= */
 static void UART_SendString(const char *str)
 {
     LPUART_DRV_SendDataBlocking(
-        1,
+        INST_LPUART_1,
         (uint8_t *)str,
         strlen(str),
-        1000
+        1000U
     );
 }
 
-/* =========================================================
- * CRUDE DELAY (DEBUG ONLY)
- * ========================================================= */
-static void DelayMs(uint32_t ms)
-{
-    for (volatile uint32_t i = 0; i < ms * 8000U; i++)
-    {
-        __asm("nop");
-    }
-}
-
-/* =========================================================
- * MAIN
- * ========================================================= */
 int main(void)
 {
-    char uartBuf[128];
-
-    /* ================= SYSTEM INIT ================= */
+    /* ===== SYSTEM INIT ===== */
     CLOCK_SYS_Init(
         g_clockManConfigsArr,
         CLOCK_MANAGER_CONFIG_CNT,
@@ -63,82 +44,42 @@ int main(void)
         g_pin_mux_InitConfigArr0
     );
 
-    /* ================= UART INIT ================= */
     LPUART_DRV_Init(
-        1,
+        INST_LPUART_1,
         &lpUartState1,
         &lpuart_1_InitConfig0
     );
+    LPUART_SetReceiverCmd(LPUART1, true);
 
-    UART_SendString("\r\n=== ULTRASONIC DEBUG: DIST + FLAG ===\r\n");
+    MotorHW_Init();
+    InputCmd_Init();
+    Motor_Input_Init();
 
-    /* ================= STATE INIT ================= */
-    gVehicleState.obstacleFlags = OBS_NONE;
-    gVehicleState.validFlags    = VS_VALID_NONE;
-    gVehicleState.us_front_cm   = -1;
-    gVehicleState.us_rear_cm    = -1;
+    UART_SendString("\r\n=== MOTOR TEST MODE ===\r\n");
+    UART_SendString("Send: f / r / s\r\n");
 
-    /* ================= ULTRASONIC INIT ================= */
-    UltrasonicInput_Init();
-
-    /* ================= MAIN LOOP ================= */
     while (1)
     {
-        /* -------- READ ULTRASONIC -------- */
-        UltrasonicInput_Update(&gVehicleState);
+        InputCmd_Update();
+        Motor_Input_Update();
 
-        /* -------- PRINT DISTANCE -------- */
-        if (gVehicleState.us_front_cm > 0 &&
-            gVehicleState.us_rear_cm > 0)
+        /* ===== LED TEST DIRECT ===== */
+        PINS_DRV_SetPins(PTD, (1U << 15) | (1U << 16) | (1U << 0));
+
+        switch (gVehicleState.motion)
         {
-            sprintf(
-                uartBuf,
-                "FRONT: %ld cm | REAR: %ld cm\r\n",
-                gVehicleState.us_front_cm,
-                gVehicleState.us_rear_cm
-            );
+            case MOTION_FORWARD:
+                PINS_DRV_ClearPins(PTD, 1U << 15);
+                break;
+
+            case MOTION_BACKWARD:
+                PINS_DRV_ClearPins(PTD, 1U << 16);
+                break;
+
+            case MOTION_STOP:
+            default:
+                PINS_DRV_ClearPins(PTD, 1U << 0);
+                break;
         }
-        else if (gVehicleState.us_front_cm > 0)
-        {
-            sprintf(
-                uartBuf,
-                "FRONT: %ld cm | REAR: No echo\r\n",
-                gVehicleState.us_front_cm
-            );
-        }
-        else if (gVehicleState.us_rear_cm > 0)
-        {
-            sprintf(
-                uartBuf,
-                "FRONT: No echo | REAR: %ld cm\r\n",
-                gVehicleState.us_rear_cm
-            );
-        }
-        else
-        {
-            sprintf(
-                uartBuf,
-                "FRONT: No echo | REAR: No echo\r\n"
-            );
-        }
-
-        UART_SendString(uartBuf);
-
-        /* -------- TEST FLAGS -> LED (ACTIVE LOW) -------- */
-
-        /* REAR obstacle -> PTD15 */
-        if (gVehicleState.obstacleFlags & OBS_REAR)
-            PINS_DRV_ClearPins(PTD, (1UL << 15)); // LED ON
-        else
-            PINS_DRV_SetPins(PTD, (1UL << 15));   // LED OFF
-
-        /* FRONT obstacle -> PTD16 */
-        if (gVehicleState.obstacleFlags & OBS_FRONT)
-            PINS_DRV_ClearPins(PTD, (1UL << 16)); // LED ON
-        else
-            PINS_DRV_SetPins(PTD, (1UL << 16));   // LED OFF
-
-        /* HC-SR04 safe interval */
-        DelayMs(120);
     }
 }

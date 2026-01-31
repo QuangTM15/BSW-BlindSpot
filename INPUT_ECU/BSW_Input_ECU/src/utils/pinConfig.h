@@ -50,11 +50,11 @@
  * ================================================= */
 
 /* Forward (Move Ahead) */
-#define MOTOR_FWD_PWM_PORT PTD // FTM1 ch4
+#define MOTOR_FWD_PWM_PORT PTD
 #define MOTOR_FWD_PWM_PIN 8U   // GPIO 8
 
 /* Reverse (Move Backward) */
-#define MOTOR_REV_PWM_PORT PTD // FTM1 ch5
+#define MOTOR_REV_PWM_PORT PTD 
 #define MOTOR_REV_PWM_PIN 9U   // GPIO 7
 
 #endif /* PIN_CFG_H */

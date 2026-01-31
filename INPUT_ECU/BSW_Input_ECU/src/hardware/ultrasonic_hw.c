@@ -1,4 +1,4 @@
-#include "utils/ultrasonic_hw.h"
+#include <hardware/ultrasonic_hw.h>
 #include "sdk_project_config.h"
 #include "peripherals_flexTimer_ic_1.h"
 #include "utils/pinConfig.h"
