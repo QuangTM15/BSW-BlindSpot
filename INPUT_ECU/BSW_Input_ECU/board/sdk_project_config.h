@@ -21,6 +21,7 @@
 #include "peripherals_lpuart_1.h"
 #include "peripherals_lpit_config_1.h"
 #include "peripherals_flexTimer_ic_1.h"
+#include "peripherals_lpuart_2.h"
 
 
 #endif /* SDK_PROJECT_CONFIG_H_ */
