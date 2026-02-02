@@ -1,9 +1,15 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
-#include "state/vehicle_state.h"
+#include <stdbool.h>
 
+/* Init all input modules */
 void InputManager_Init(void);
-void InputManager_Update(VehicleState_t *state);
 
-#endif
+/*
+ * Update all inputs and vehicle state
+ * @return true if vehicle state changed
+ */
+bool InputManager_Update(void);
+
+#endif /* INPUT_MANAGER_H */
