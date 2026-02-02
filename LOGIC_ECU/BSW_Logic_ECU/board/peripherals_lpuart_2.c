@@ -22,35 +22,36 @@ functionalGroups:
 /*******************************************************************************
  * Included files 
  ******************************************************************************/
-#include "peripherals_lpuart_1.h"
+#include "peripherals_lpuart_2.h"
 
 /*******************************************************************************
- * lpuart_1 initialization code
+ * lpuart_2 initialization code
  ******************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'lpuart_1'
+- name: 'lpuart_2'
 - type: 'lpuart_config'
 - mode: 'general'
 - custom_name_enabled: 'false'
 - type_id: 'lpuart'
 - functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'LPUART_1'
+- peripheral: 'LPUART_2'
 - config_sets:
   - lpuart_driver:
-    - lpuart_state_name: 'lpUartState1'
+    - lpuart_state_name: 'lpUartState2'
     - lpuart_configuration:
       - 0:
-        - name: 'lpuart_1_InitConfig0'
+        - name: 'lpuart_2_InitConfig0'
         - readonly: 'true'
         - transferType: 'LPUART_USING_INTERRUPTS'
-        - baudRate: '115200'
+        - baudRate: '9600'
         - parityMode: 'LPUART_PARITY_DISABLED'
         - stopBitCount: 'LPUART_ONE_STOP_BIT'
         - bitCountPerChar: 'LPUART_8_BITS_PER_CHAR'
         - rxDMAChannel: '0'
         - txDMAChannel: '0'
+    - quick_selection: 'dv_lpuart2'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -62,11 +63,11 @@ instance:
  * The external variables will be used in other source files in application code.
  *
  */
-lpuart_state_t lpUartState1;
+lpuart_state_t lpUartState2;
 
-const lpuart_user_config_t lpuart_1_InitConfig0 = {
+const lpuart_user_config_t lpuart_2_InitConfig0 = {
   .transferType = LPUART_USING_INTERRUPTS,
-  .baudRate = 115200UL,
+  .baudRate = 9600UL,
   .parityMode = LPUART_PARITY_DISABLED,
   .stopBitCount = LPUART_ONE_STOP_BIT,
   .bitCountPerChar = LPUART_8_BITS_PER_CHAR,

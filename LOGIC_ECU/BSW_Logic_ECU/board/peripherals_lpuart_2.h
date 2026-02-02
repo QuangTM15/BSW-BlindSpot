@@ -3,8 +3,8 @@
  * will be overwritten if the respective S32 Config Tools is used to update this file.
  **********************************************************************************************************************/
 
-#ifndef lpuart_1_H
-#define lpuart_1_H
+#ifndef lpuart_2_H
+#define lpuart_2_H
 
 /**
  * @page misra_violations MISRA-C:2012 violations
@@ -22,13 +22,13 @@
 /*******************************************************************************
  * Definitions 
  ******************************************************************************/
-#define INST_LPUART_1  1
+#define INST_LPUART_2  2
 
-extern lpuart_state_t lpUartState1;
+extern lpuart_state_t lpUartState2;
 
 /* External declaration of LPUART configuration structure */
-extern const lpuart_user_config_t lpuart_1_InitConfig0;
+extern const lpuart_user_config_t lpuart_2_InitConfig0;
 
 
 
-#endif /* lpuart_1_H */
+#endif /* lpuart_2_H */
