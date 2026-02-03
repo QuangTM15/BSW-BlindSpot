@@ -16,10 +16,10 @@
  * TURN SIGNAL LED
  * ================================================= */
 #define PIN_TURN_LEFT_PORT       PTD
-#define PIN_TURN_LEFT_PIN        15U //LED on board
+#define PIN_TURN_LEFT_PIN        9U //GPIO7
 
 #define PIN_TURN_RIGHT_PORT      PTD
-#define PIN_TURN_RIGHT_PIN       16U //Led on board
+#define PIN_TURN_RIGHT_PIN       8U //GPIO8
 
 /* =================================================
  * DOOR WARNING LED
@@ -34,8 +34,7 @@
  * REVERSE WARNING LED (PWM)
  * ================================================= */
 #define PIN_REVERSE_LED_PORT     PTD
-#define PIN_REVERSE_LED_PIN      12U //FTM2 Ch2
-
+#define PIN_REVERSE_LED_PIN      12U //FTM2 Ch2 GPIO4
 /* =================================================
  * BUZZER
  * ================================================= */

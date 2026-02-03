@@ -20,6 +20,7 @@
 #include "pin_mux.h"
 #include "peripherals_lpuart_1.h"
 #include "peripherals_lpuart_2.h"
+#include "peripherals_flexTimer_pwm_1.h"
 
 
 #endif /* SDK_PROJECT_CONFIG_H_ */

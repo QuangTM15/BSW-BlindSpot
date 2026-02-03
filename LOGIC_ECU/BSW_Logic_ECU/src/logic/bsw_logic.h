@@ -1,13 +1,34 @@
-/*
- * bsw_logic.h
- *
- *  Created on: Jan 15, 2026
- *      Author: -Asus
- */
+#ifndef BSW_LOGIC_H
+#define BSW_LOGIC_H
 
-#ifndef LOGIC_BSW_LOGIC_H_
-#define LOGIC_BSW_LOGIC_H_
+#include <stdbool.h>
+#include <stdint.h>
+#include "state/vehicle_state.h"
 
+typedef struct
+{
+    /* Mirror warning */
+    bool mirrorLeft;
+    bool mirrorRight;
 
+    /* Door warning */
+    bool doorLeft;
+    bool doorRight;
 
-#endif /* LOGIC_BSW_LOGIC_H_ */
+    /* Turn indicator (for output display if needed) */
+    bool turnLeft;
+    bool turnRight;
+
+    /* Reverse warning */
+    bool reverseActive;
+    uint8_t reverseDistanceCm;
+
+    /* Buzzer */
+    bool buzzerOn;
+
+} BswOutput_t;
+
+void BswLogic_Evaluate(const VehicleState_t *state,
+                       BswOutput_t *out);
+
+#endif /* BSW_LOGIC_H */

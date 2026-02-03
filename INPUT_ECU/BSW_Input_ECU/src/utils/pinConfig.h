@@ -57,4 +57,4 @@
 #define MOTOR_REV_PWM_PORT PTD 
 #define MOTOR_REV_PWM_PIN 9U   // GPIO 7
 
-#endif /* PIN_CFG_H */
+#endif /* PIN_CFG_H */ 
