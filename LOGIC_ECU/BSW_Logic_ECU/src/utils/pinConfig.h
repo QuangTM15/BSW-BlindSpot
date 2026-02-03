@@ -3,52 +3,43 @@
 
 #include "sdk_project_config.h"
 
-/* =========================================================
- * OUTPUT - LED MIRROR (Blind Spot Warning)
- * ========================================================= */
-#define LED_MIRROR_LEFT_GPIO     PTD
-#define LED_MIRROR_LEFT_PIN      8U //GPIO8
+/* =================================================
+ * MIRROR WARNING LED
+ * ================================================= */
+#define PIN_MIRROR_LEFT_PORT     PTD
+#define PIN_MIRROR_LEFT_PIN      17U //GPIO1
 
-#define LED_MIRROR_RIGHT_GPIO    PTD
-#define LED_MIRROR_RIGHT_PIN     9U //GPIO7
+#define PIN_MIRROR_RIGHT_PORT    PTD
+#define PIN_MIRROR_RIGHT_PIN     14U //GPIO2
 
-/* =========================================================
- * OUTPUT - LED DOOR (Safe Exit Warning)
- * ========================================================= */
-#define LED_DOOR_LEFT_GPIO       PTD
-#define LED_DOOR_LEFT_PIN        10U //GPIO6
+/* =================================================
+ * TURN SIGNAL LED
+ * ================================================= */
+#define PIN_TURN_LEFT_PORT       PTD
+#define PIN_TURN_LEFT_PIN        15U //LED on board
 
-#define LED_DOOR_RIGHT_GPIO      PTD
-#define LED_DOOR_RIGHT_PIN       11U //GPIO5
+#define PIN_TURN_RIGHT_PORT      PTD
+#define PIN_TURN_RIGHT_PIN       16U //Led on board
 
-/* =========================================================
- * OUTPUT - BUZZER
- * ========================================================= */
-#define BUZZER_GPIO              PTD
-#define BUZZER_PIN               12U //GPIO4
+/* =================================================
+ * DOOR WARNING LED
+ * ================================================= */
+#define PIN_DOOR_LEFT_PORT       PTD
+#define PIN_DOOR_LEFT_PIN        11U //GPIO5
 
-/* =========================================================
- * OUTPUT - REVERSE LED (PWM)
- * =========================================================
- * PWM brightness increases when distance decreases
- * Controlled by FTM
- */
-#define LED_REVERSE_PWM_FTM      FTM0
-#define LED_REVERSE_PWM_CHANNEL  0U
-#define LED_REVERSE_PWM_PIN      15U   /* PTD15 */  //RED LED
+#define PIN_DOOR_RIGHT_PORT      PTD
+#define PIN_DOOR_RIGHT_PIN       13U //GPIO3
 
-/* =========================================================
- * COMMON MACROS
- * ========================================================= */
-#define GPIO_PIN_MASK(pin)       (1U << (pin))
+/* =================================================
+ * REVERSE WARNING LED (PWM)
+ * ================================================= */
+#define PIN_REVERSE_LED_PORT     PTD
+#define PIN_REVERSE_LED_PIN      12U //FTM2 Ch2
 
-/* =========================================================
- * INPUT - TURN SIGNAL
- * ========================================================= */
-#define TURN_LEFT_GPIO           PTD
-#define TURN_LEFT_PIN            16U   /* PTD16 */ //LED BLUE
-
-#define TURN_RIGHT_GPIO          PTD
-#define TURN_RIGHT_PIN           0U    /* PTD0 */ //LED GREEN
+/* =================================================
+ * BUZZER
+ * ================================================= */
+#define PIN_BUZZER_PORT          PTD
+#define PIN_BUZZER_PIN           10U //GPIO6
 
 #endif /* PIN_CONFIG_H */
