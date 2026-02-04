@@ -4,14 +4,10 @@
 #include <stdbool.h>
 #include "utils/pinConfig.h"
 
-/* Button event flags set in IRQ */
 static volatile bool leftButtonEvent  = false;
 static volatile bool rightButtonEvent = false;
-
-/* Current turn state */
 static TurnSignal_t currentTurn = TURN_NONE;
 
-/* Button interrupt handler */
 void PORTC_IRQHandler(void)
 {
     if (PORTC->ISFR & (1UL << BTN_LEFT_PIN))
@@ -34,28 +30,25 @@ void TurnInput_Init(void)
     currentTurn      = TURN_NONE;
 }
 
-bool TurnInput_Update(TurnSignal_t *turn_out)
+void TurnInput_Update(VehicleState_t *state)
 {
-    bool changed = false;
+    if (state == NULL)
+    {
+        return;
+    }
 
     if (leftButtonEvent)
     {
         leftButtonEvent = false;
         currentTurn = (currentTurn == TURN_LEFT) ? TURN_NONE : TURN_LEFT;
-        changed = true;
     }
 
     if (rightButtonEvent)
     {
         rightButtonEvent = false;
         currentTurn = (currentTurn == TURN_RIGHT) ? TURN_NONE : TURN_RIGHT;
-        changed = true;
     }
 
-    if (changed && turn_out != NULL)
-    {
-        *turn_out = currentTurn;
-    }
-
-    return changed;
+    state->turnSignal = currentTurn;
+    state->validFlags |= VS_VALID_TURN;
 }
