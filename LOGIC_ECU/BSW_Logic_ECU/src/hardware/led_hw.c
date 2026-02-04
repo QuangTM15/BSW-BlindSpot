@@ -65,26 +65,26 @@ void LedHW_DoorRight_Set(bool on)
        : LED_OFF(PIN_DOOR_RIGHT_PORT, PIN_DOOR_RIGHT_PIN);
 }
 
-/* Reverse LED PWM */
+/* Reverse LED PWM - STEP MODE (EASY TO SEE) */
 void LedHW_Reverse_SetByDistance(uint8_t distanceCm)
 {
     uint16_t ticks;
-    if (distanceCm > REVERSE_DETECT_MAX_CM)
+
+    if (distanceCm > 25U)
     {
-        ticks = 0U;
+        ticks = 0U;              /* OFF */
     }
-    else if (distanceCm <= REVERSE_DETECT_MIN_CM)
+    else if (distanceCm > 15U)
     {
-        ticks = 32768U;
+        ticks = 8192U;           /* ~25% */
+    }
+    else if (distanceCm > 8U)
+    {
+        ticks = 16384U;          /* ~50% */
     }
     else
     {
-        ticks =
-            (uint16_t)(
-                (REVERSE_DETECT_MAX_CM - distanceCm) *
-                32768U /
-                (REVERSE_DETECT_MAX_CM - REVERSE_DETECT_MIN_CM)
-            );
+        ticks = 32768U;          /* 100% */
     }
 
     FTM_DRV_UpdatePwmChannel(
@@ -96,4 +96,3 @@ void LedHW_Reverse_SetByDistance(uint8_t distanceCm)
         true
     );
 }
-

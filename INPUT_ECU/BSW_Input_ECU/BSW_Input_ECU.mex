@@ -68,7 +68,11 @@
                      </pin_features>
                   </pin>
                   <pin peripheral="LPUART1" signal="rxd" pin_num="81" pin_signal="PTC6"/>
-                  <pin peripheral="LPUART1" signal="txd" pin_num="80" pin_signal="PTC7"/>
+                  <pin peripheral="LPUART1" signal="txd" pin_num="80" pin_signal="PTC7">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
                   <pin peripheral="FTM2" signal="ch, 2" pin_num="34" pin_signal="PTD12">
                      <pin_features>
                         <pin_feature name="direction" value="INPUT"/>
@@ -102,11 +106,6 @@
                      </pin_features>
                   </pin>
                   <pin peripheral="PORTD" signal="port, 8" pin_num="42" pin_signal="PTD8">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="PORTD" signal="port, 0" pin_num="4" pin_signal="PTD0">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
@@ -357,7 +356,7 @@
                               <setting name="name" value="lpuart_1_InitConfig0"/>
                               <setting name="readonly" value="true"/>
                               <setting name="transferType" value="LPUART_USING_INTERRUPTS"/>
-                              <setting name="baudRate" value="115200"/>
+                              <setting name="baudRate" value="9600"/>
                               <setting name="parityMode" value="LPUART_PARITY_DISABLED"/>
                               <setting name="stopBitCount" value="LPUART_ONE_STOP_BIT"/>
                               <setting name="bitCountPerChar" value="LPUART_8_BITS_PER_CHAR"/>

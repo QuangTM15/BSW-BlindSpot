@@ -14,6 +14,18 @@ void BswLogic_Evaluate(const VehicleState_t *state,
     memset(out, 0, sizeof(BswOutput_t));
 
     /* =================================================
+     * PRIORITY 0: TURN SIGNAL (HIGHEST PRIORITY)
+     * ================================================= */
+    if (state->turnSignal == TURN_LEFT)
+    {
+        out->turnLeft = true;
+    }
+    else if (state->turnSignal == TURN_RIGHT)
+    {
+        out->turnRight = true;
+    }
+
+    /* =================================================
      * PRIORITY 1: REVERSE WARNING
      * ================================================= */
     if (state->motion == MOTION_BACKWARD)
