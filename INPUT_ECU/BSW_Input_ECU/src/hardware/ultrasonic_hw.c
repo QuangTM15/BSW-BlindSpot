@@ -7,6 +7,8 @@
 #define US_INVALID_DISTANCE   0xFFFFU
 #define TICKS_TO_CM_DIV       330U
 
+extern void InputCmd_Update(void);
+
 ftm_state_t state0;
 
 /* Trigger HC-SR04 */
@@ -20,8 +22,16 @@ static void UltrasonicHW_Trigger(void)
 static void UltrasonicHW_DelayMs(uint32_t ms)
 {
     volatile uint32_t i;
+
     while (ms--)
-        for (i = 0; i < 8000; i++) __asm("nop");
+    {
+        for (i = 0; i < 8000; i++)
+        {
+            __asm("nop");
+        }
+
+        InputCmd_Update();
+    }
 }
 static uint8_t UltrasonicHW_GetChannel(ObstacleFlag_t dir)
 {
@@ -50,8 +60,15 @@ void UltrasonicHW_Init(void)
 static void UltrasonicHW_DelayUs(uint32_t us)
 {
     volatile uint32_t i;
+
     while (us--)
-        for (i = 0; i < 8; i++) __asm("nop");
+    {
+        for (i = 0; i < 8; i++)
+            __asm("nop");
+
+        /* feed UART */
+        InputCmd_Update();
+    }
 }
 
 static inline void UltrasonicHW_TriggerFB(void)

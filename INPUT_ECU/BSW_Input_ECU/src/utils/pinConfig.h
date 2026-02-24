@@ -22,7 +22,7 @@
 #define US_REAR_ECHO_PIN 14U // GPIO 2 Input
 
 #define US_LEFT_ECHO_PORT PTD
-#define US_LEFT_ECHO_PIN 13U // GPIO 3 Input FTM2 Ch4
+#define US_LEFT_ECHO_PIN 13U// GPIO 3 Input FTM2 Ch4
 
 #define US_RIGHT_ECHO_PORT PTD // GPIO 4 Input FTM2 Ch2
 #define US_RIGHT_ECHO_PIN 12U
