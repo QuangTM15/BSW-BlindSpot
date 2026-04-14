@@ -33,7 +33,7 @@ int main(void)
     while (1)
     {
         /* ---------- UART RX ---------- */
-        if (UART_RxPolling_ReadByte(&rxByte))
+        if (UART_ReadByte(&rxByte))
         {
             FrameRx_PushByte(rxByte);
         }

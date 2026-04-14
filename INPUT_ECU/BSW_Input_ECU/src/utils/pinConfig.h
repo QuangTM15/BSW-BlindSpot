@@ -10,6 +10,7 @@
 /* Shared TRIG (LEFT / RIGHT) */
 #define US_TRIG_PORT PTE // GPIO 0 OUTPUT
 #define US_TRIG_PIN 0U
+
 /* FB TRIG */
 #define US_FB_TRIG_PORT PTD
 #define US_FB_TRIG_PIN 10U // GPIO 6 //OUTPUT
@@ -52,7 +53,7 @@
 /* Forward (Move Ahead) */
 #define MOTOR_FWD_PWM_PORT PTD
 #define MOTOR_FWD_PWM_PIN 8U   // GPIO 8
-
+  
 /* Reverse (Move Backward) */
 #define MOTOR_REV_PWM_PORT PTD 
 #define MOTOR_REV_PWM_PIN 9U   // GPIO 7

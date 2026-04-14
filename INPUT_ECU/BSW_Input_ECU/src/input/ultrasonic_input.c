@@ -37,7 +37,6 @@ void UltrasonicInput_Update(VehicleState_t *state)
         state->obstacleFlags |= OBS_RIGHT;
     }
 
-
     /* ================= FRONT ================= */
       dist = UltrasonicHW_GetDistanceCm(OBS_FRONT);
       if (dist != US_INVALID_DISTANCE)

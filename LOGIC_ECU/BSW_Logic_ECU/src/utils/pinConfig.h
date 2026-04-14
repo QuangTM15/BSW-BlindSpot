@@ -29,7 +29,7 @@
 
 #define PIN_DOOR_RIGHT_PORT      PTD
 #define PIN_DOOR_RIGHT_PIN       13U //GPIO3
-
+      
 /* =================================================
  * REVERSE WARNING LED (PWM)
  * ================================================= */

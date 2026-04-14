@@ -4,7 +4,7 @@
 #include "lpuart_hw_access.h"
 #include "peripherals_lpuart_2.h"
 
-bool UART_RxPolling_ReadByte(uint8_t *outByte)
+bool UART_ReadByte(uint8_t *outByte)
 {
     if (outByte == NULL)
         return false;
